@@ -1,10 +1,5 @@
 import pprint
 import uuid
-import nltk
-
-nltk.download('wordnet')
-from nltk.stem import WordNetLemmatizer
-
 import pandas as pd
 import requests
 import spacy
@@ -14,7 +9,6 @@ from spacy.lang.en import English
 import re
 
 nlp = spacy.load("en_core_web_sm")
-lmt = WordNetLemmatizer()
 
 # Create a Tokenizer with the default settings for English
 # including punctuation rules and exceptions
@@ -56,15 +50,20 @@ for index, description in enumerate(description_list):
     description = " ".join([word for word in description.split(" ") if word not in STOP_WORDS])
     description_list_cleaned.append(description)
     print('Cleaned up', description)
-description_list=lmt.lemmatize(description_list)
-tfIdfVectorizer = TfidfVectorizer(use_idf=True, ngram_range=(1, 2), stop_words={'english'})
+#
+tfIdfVectorizer = TfidfVectorizer(use_idf=True, stop_words={'english'})
 tfIdf = tfIdfVectorizer.fit_transform(description_list)
-pprint.pprint(tfIdf)
-
-df = pd.DataFrame([tfIdfVectorizer.vocabulary_[key] for key in tfIdfVectorizer.vocabulary_], index=tfIdfVectorizer.vocabulary_.keys(), columns=["TF-IDF"])
+# pprint.pprint(tfIdf)
+#
+df = pd.DataFrame(tfIdf[0].T.todense(), index=tfIdfVectorizer.vocabulary_.keys(), columns=["TF-IDF"])
 df = df.sort_values('TF-IDF', ascending=False)
-
-f = open(f"test-{uuid.uuid4()}.txt", "w")
-f.write(df.head(len(description_list)).to_string())
+#
+# tfIdfVectorizer.fit_transform(description_list)
+# idf = tfIdfVectorizer.idf_
+# dic = dict(zi(ptfIdfVectorizer.get_feature_names(), "TF-IDF"))
+print(df)
+#
+# f = open(f"test-{uuid.uuid4()}.txt", "w")
+# f.write(df.head(len(description_list)).to_string())
 
 # print(description_list[0])
