@@ -1,5 +1,5 @@
 import Page from "../components/common/page";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Button, Collapse, Grid, IconButton, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {loginUser} from "../requests/user";
@@ -12,10 +12,32 @@ const PresentationPage = () => {
     const { register, handleSubmit, getValues, trigger, formState: { isValid, errors } } = useForm({mode: "onBlur"});
     const onSubmit = data => console.log(data);
 
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+
+    const handleSpeechInput = () => {
+        const command = transcript.split(' ')[0];
+        const content = transcript.split(' ').splice(1, transcript.length).join(' ')
+
+        if(command === 'search')
+        {
+            setSearchBarOpened(true);
+            return 'Searching for: ' + content;
+        }
+        if(command === 'stop')
+        {
+            toggleSpeechRecognition();
+            return 'Close voice!';
+        }
+
+        return 'Command not found';
+    }
+
     const [speechStatus, setSpeechStatus] = useState(false)
     const [transcript, setTranscript] = useState('')
-    const [recognition, setRecognition] = useState(null)
+    const [recognition, setRecognition] = useState(() => {return (new SpeechRecognition());})
     const [searchBarOpened, setSearchBarOpened] = useState(false)
+    const inputHandler = useMemo(() => handleSpeechInput(), [transcript])
 
     const verifyFormData = () => {
         trigger().then((data)=>{
@@ -34,28 +56,8 @@ const PresentationPage = () => {
     }
 
 
-    const handleSpeechInput = () => {
-        const command = transcript.split(' ')[0];
-        const content = transcript.split(' ').splice(1, transcript.length).join(' ')
 
-        if(command === 'search')
-            return 'Searching for: ' + content;
-        if(command === 'next')
-            return 'Next item: ' + content;
-        if(command === 'previous')
-            return 'Previous item: ' + content;
-        if(command === 'open')
-            return 'Open item: ' + content;
-        if(command === 'order')
-            return 'Order items ' + content;
-        if(command === 'stop')
-            return 'Stop vocal commands ' + content;
-
-        return 'Command not found';
-    }
-
-    useEffect(() => {
-        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const toggleSpeechRecognition = () => {
         const recogn = new SpeechRecognition()
         recogn.interimResults = true;
 
@@ -66,21 +68,21 @@ const PresentationPage = () => {
                 .join('').toLowerCase()
             setTranscript(transcript)
         });
-        setRecognition(recogn);
-    }, [speechStatus])
 
-
-    const toggleSpeechRecognition = () => {
         if(!speechStatus)
         {
-            recognition.start();
+            recogn.start();
+        }
+        else {
+            recogn.addEventListener('end', recogn.start);
         }
 
         setSpeechStatus((ant) => {return (!ant)});
     }
 
-
-    console.log(speechStatus)
+    const toggleSearchBar = () => {
+        setSearchBarOpened((ant) => {return (!ant);})
+    }
 
     return (<>
         <Page>
@@ -88,9 +90,7 @@ const PresentationPage = () => {
                 <Grid container item xs={12} gap={1} p={1}>
                     <Grid container item xs={12} className={"row-styled-elem search_bar_container" + (searchBarOpened ? " opened" : "")}>
                         <Grid item xs={8} sx={{display: "flex"}}>
-                            <IconButton onClick={() => {
-                                setSearchBarOpened((ant) => {return (!ant);})
-                            }}>
+                            <IconButton onClick={toggleSearchBar}>
                                 <SearchIcon/>
                             </IconButton>
                             <TextField id="search_bar"
@@ -124,22 +124,17 @@ const PresentationPage = () => {
 
                     </Grid>
 
-                    <p>Here is the transcript: {handleSpeechInput()}</p>
-
-
-
-
-                    {/*onClick={toggleSearchBar}*/}
+                    <p>Here is the transcript: {inputHandler} </p>
 
 
 
 
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit"
-                            color="primary"
-                            variant="contained"
-                            onClick={verifyFormData}>Send</Button>
+                    {/*<Button type="submit"*/}
+                    {/*        color="primary"*/}
+                    {/*        variant="contained"*/}
+                    {/*        onClick={verifyFormData}>Send</Button>*/}
                 </Grid>
             </form>
         </Page>
