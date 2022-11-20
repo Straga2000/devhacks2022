@@ -1,4 +1,6 @@
 import json
+import pprint
+
 from Levenshtein import distance as lev
 
 from sklearn.feature_extraction.text import CountVectorizer
@@ -13,23 +15,25 @@ with open(PRODUCTS_FILE, 'r') as product_file:
     # obtaining id from link
 
     # pre process the tags to obtain just the final words
-    tags_referencing_products = [set([tag for tag in product['tags'] if len(tag) > 1 and re.match(r'[a-zA-Z]+', tag)]) for product in products]
+    tags_referencing_products = [set(product['tags']) for product in products]
 
 prompt_data = input('Enter prompt')
 prompt_data = set(prompt_data.split(" "))
 
-tags_referencing_products = [list(tags) for tags in tags_referencing_products if prompt_data.intersection(tags)]
+tags_referencing_products_indexed = [(list(tags), index) for index, tags in enumerate(tags_referencing_products) if prompt_data.intersection(tags)]
 
 minimal_distances = []
-for i in tags_referencing_products:
-    for j in tags_referencing_products:
+for i, idx_i in tags_referencing_products_indexed:
+    for j, idx_j in tags_referencing_products_indexed:
         if i != j:
-            minimal_distances.append((lev(i, j), i, j))
+            minimal_distances.append((lev(i, j), idx_i, idx_j))
+            # print('Here is the internal stuff', i, j)
 
 minimal_distances = sorted(minimal_distances, key=lambda x: x[0])[:20]
 
-for elem in minimal_distances:
-    print(elem)
+for lev_idx, i, j in minimal_distances:
+    print(lev_idx, products[i]['tags'], products[j]['tags'])
+    print(lev_idx, tags_referencing_products[i], tags_referencing_products[j])
 
 # make a TFIDF transformer for the given elements
 # cv = CountVectorizer(max_df=0.85, max_features=len(tags_referencing_products))
