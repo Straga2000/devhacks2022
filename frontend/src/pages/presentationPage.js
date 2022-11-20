@@ -40,6 +40,17 @@ const PresentationPage = () => {
 
         if(command === 'search')
             return 'Searching for: ' + content;
+        if(command === 'next')
+            return 'Next item: ' + content;
+        if(command === 'previous')
+            return 'Previous item: ' + content;
+        if(command === 'open')
+            return 'Open item: ' + content;
+        if(command === 'order')
+            return 'Order items ' + content;
+        if(command === 'stop')
+            return 'Stop vocal commands ' + content;
+
         return 'Command not found';
     }
 
