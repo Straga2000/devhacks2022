@@ -24,6 +24,18 @@ const PresentationPage = () => {
             setSearchBarOpened(true);
             return 'Searching for: ' + content;
         }
+        if(command === 'open')
+        {
+            return 'Open item: ' + content;
+        }
+        if(command === 'next')
+        {
+            return 'Next item: ' + content;
+        }
+        if(command === 'previous')
+        {
+            return 'Previous item: ' + content;
+        }
         if(command === 'stop')
         {
             toggleSpeechRecognition();
