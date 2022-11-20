@@ -1,0 +1,19 @@
+.default-carousel {
+  &.centered-carousel {
+    .use-spring-carousel-item {
+      align-self: center;
+    }
+  }
+
+  .button-wrapper {
+    //height: 100%;
+    align-self: center;
+    justify-content: center;
+  }
+
+  .use-spring-carousel-item {
+      justify-content: center;
+  }
+}
+
+

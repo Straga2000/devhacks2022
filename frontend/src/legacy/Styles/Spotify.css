@@ -1,0 +1,16 @@
+.spotifyButton {
+    width: 15%;
+    color: white;
+    background-color: #1DB954;
+    border-width: 0;
+    padding: 10px 20px;
+}
+
+.spotifyPage {
+    alignment: center;
+    vertical-align: center;
+}
+
+.colCentered {
+    width: 1fr;
+}

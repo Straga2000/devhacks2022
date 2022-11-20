@@ -1,0 +1,43 @@
+@import "../../styling/theme";
+
+.spotify-carousel-container {
+  flex-direction: row;
+  gap: 8px;
+  align-content: center;
+  width: fit-content;
+  color: white;
+  background-color: #191414;
+  transition: 0.4s ease-in-out;
+  transform: scale(1);
+
+  &:hover {
+    background-color: $spotifyDark;
+    //transform: scale(1.06);
+    //box-shadow: 4px 4px 8px #4d4545;
+  }
+
+  img {
+    min-width: 200px;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1;
+    -webkit-user-drag: none;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+
+    g {
+      path {
+        fill: white;
+      };
+    }
+
+  }
+
+}
+
+//.use-spring-carousel-item {
+//  padding: 8px;
+//}
+

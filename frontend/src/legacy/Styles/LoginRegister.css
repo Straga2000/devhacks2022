@@ -1,0 +1,14 @@
+.submitButton {
+    background-color: #222;
+    color: white;
+}
+
+.submitButton:hover {
+    background-color: #1DB954;
+    color: #222;
+}
+
+.fieldLabel {
+    font-weight: bold;
+    color: #222;
+}

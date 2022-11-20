@@ -1,0 +1,52 @@
+@import './theme.scss';
+
+:export {
+  primary: $primary;
+  dark: $dark;
+  blue: $blue;
+  lightBlue: $lightBlue;
+  darkBlue: $darkBlue;
+  secondary: $secondary;
+  secondaryDark: $secondaryDark;
+  light: $light;
+  violet: $violet;
+  violetDark: $violetDark;
+  lightBackground: $lightBackground;
+  lighterBackground: $lighterBackground;
+  lightestBackground: $lightestBackground;
+  darkBackground: $darkBackground;
+  secondaryDarkblue:$secondaryDarkBlue;
+  secondaryLightBackground: $secondaryLightBackground;
+  grey:$grey;
+  lightGray: $lightGray;
+  orange:$orange;
+  whiteLight: $whiteLight;
+  textLightest: $textLightest;
+  textLightest2: $textLightest2;
+  textLight: $textLight;
+  textDefault: $textDefault;
+  textDark: $textDark;
+  backgroundLigther: $backgroundLigther;
+  primaryDark: $primaryDark;
+  primaryLighter: $primaryLighter;
+  accent2Dark: $accent2Dark;
+  accentDark: $accentDark;
+  statusWarning: $statusWarning;
+  spotify: $spotify;
+  spotifyDark: $spotifyDark;
+
+  RalewayRegular: $RalewayRegular;
+  RalewayBlack: $RalewayBlack;
+  RalewayThin: $RalewayThin;
+  RalewayBold: $RalewayBold;
+  RobotoRegular: $RobotoRegular;
+  RobotoThin: $RobotoThin;
+  RobotoMedium: $RalewayMedium;
+  RobotoBold: $RobotoBold;
+  RobotoBlack: $RobotoBlack;
+
+  regular: $regular;
+  medium: $medium;
+  bold: $bold;
+  black: $black;
+}

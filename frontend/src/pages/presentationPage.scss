@@ -1,0 +1,55 @@
+@import "../styling/theme.module";
+.row-styled-elem {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.card_styled {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: $secondaryDarkBlue;
+  color: white;
+
+  > ul {
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      transition: 0.3s ease-in-out;
+      padding-left: 0;
+
+      &:hover {
+        padding-left: 8px;
+        color: #24B7FF;
+      }
+
+    }
+
+  }
+}
+
+.search_bar_container {
+  flex-grow: 1;
+
+  .text_container {
+    transition: 0.3s ease-in-out;
+    opacity: 0;
+    width: 100%;
+    > div {
+      width: 100%;
+    }
+
+  }
+
+  &.opened {
+    .text_container {
+      opacity: 1;
+      width: 100%;
+    }
+  }
+
+}
